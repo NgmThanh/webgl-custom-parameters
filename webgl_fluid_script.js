@@ -26,16 +26,7 @@ SOFTWARE.
 
 
 // Simulation code
-// Créer un canvas et l'ajouter au body
-var canvas = document.createElement('canvas');
-document.body.appendChild(canvas);
-
-// Ajuster la taille du canvas
-function resizeCanvas() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-}
-window.addEventListener('resize', resizeCanvas);
+var canvas = document.getElementsByTagName('canvas')[0];
 resizeCanvas();
 
 var config = {
