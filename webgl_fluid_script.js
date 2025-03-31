@@ -26,7 +26,9 @@ SOFTWARE.
 
 
 // Simulation code
+
 var canvas = document.getElementsByTagName('canvas')[0];
+var frame = document.querySelector("#canvasFrame");
 resizeCanvas();
 
 var config = {
@@ -911,7 +913,7 @@ function correctRadius (radius) {
     return radius;
 }
 
-document.body.addEventListener('mousemove', function (e) {
+frame.addEventListener('mousemove', function (e) {
     var pointer = pointers[0];
     var posX = scaleByPixelRatio(e.offsetX);
     var posY = scaleByPixelRatio(e.offsetY);
