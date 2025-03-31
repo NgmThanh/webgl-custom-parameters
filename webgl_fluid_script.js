@@ -912,14 +912,14 @@ function correctRadius (radius) {
     return radius;
 }
 
-document.addEventListener('mousemove', function (e) {
+window.addEventListener('mousemove', function (e) {
     var pointer = pointers[0];
-    var posX = scaleByPixelRatio(e.offsetX);
-    var posY = scaleByPixelRatio(e.offsetY);
+    var posX = scaleByPixelRatio(e.clientX); 
+    var posY = scaleByPixelRatio(e.clientY);
     updatePointerMoveData(pointer, posX, posY);
     splatPointer(pointer);
 });
-
+/*
 canvas.addEventListener('touchstart', function (e) {
     e.preventDefault();
     var touches = e.targetTouches;
@@ -962,6 +962,7 @@ window.addEventListener('keydown', function (e) {
     if (e.key === ' ')
         { splatStack.push(parseInt(Math.random() * 20) + 5); }
 });
+*/
 
 function updatePointerDownData (pointer, id, posX, posY) {
     pointer.id = id;
