@@ -26,9 +26,31 @@ SOFTWARE.
 
 
 // Simulation code
+function initWebGLFluid() {
+    return new Promise((resolve) => {
+        // Initialisation WebGL ici...
+        setTimeout(() => {
+            resolve(); // Une fois l'initialisation terminée, on résout la promesse
+        }, 500); // Simule le temps de chargement
+    });
+}
+
+function onMouseMove(e) {
+    var pointer = pointers[0];
+    var posX = scaleByPixelRatio(e.clientX); // Utilisation de clientX
+    var posY = scaleByPixelRatio(e.clientY);
+    updatePointerMoveData(pointer, posX, posY);
+    splatPointer(pointer);
+}
+
+// Attendre la fin de l'initialisation avant d'ajouter l'event
+initWebGLFluid().then(() => {
+    window.addEventListener('mousemove', onMouseMove);
+});
 
 var canvas = document.getElementsByTagName('canvas')[0];
 resizeCanvas();
+initWebGLFluid();
 
 var config = {
     SIM_RESOLUTION: 128,
@@ -911,58 +933,6 @@ function correctRadius (radius) {
         { radius *= aspectRatio; }
     return radius;
 }
-
-window.addEventListener('mousemove', function (e) {
-    var pointer = pointers[0];
-    var posX = scaleByPixelRatio(e.clientX); 
-    var posY = scaleByPixelRatio(e.clientY);
-    updatePointerMoveData(pointer, posX, posY);
-    splatPointer(pointer);
-});
-/*
-canvas.addEventListener('touchstart', function (e) {
-    e.preventDefault();
-    var touches = e.targetTouches;
-    while (touches.length >= pointers.length)
-        { pointers.push(new pointerPrototype()); }
-    for (var i = 0; i < touches.length; i++) {
-        var posX = scaleByPixelRatio(touches[i].pageX);
-        var posY = scaleByPixelRatio(touches[i].pageY);
-        updatePointerDownData(pointers[i + 1], touches[i].identifier, posX, posY);
-    }
-});
-
-canvas.addEventListener('touchmove', function (e) {
-    e.preventDefault();
-    var touches = e.targetTouches;
-    for (var i = 0; i < touches.length; i++) {
-        var pointer = pointers[i + 1];
-        if (!pointer.down) { continue; }
-        var posX = scaleByPixelRatio(touches[i].pageX);
-        var posY = scaleByPixelRatio(touches[i].pageY);
-        updatePointerMoveData(pointer, posX, posY);
-    }
-}, false);
-
-window.addEventListener('touchend', function (e) {
-    var touches = e.changedTouches;
-    var loop = function ( i ) {
-        var pointer = pointers.find(function (p) { return p.id == touches[i].identifier; });
-        if (pointer == null) { return; }
-        updatePointerUpData(pointer);
-    };
-
-    for (var i = 0; i < touches.length; i++)
-    loop( i );
-});
-
-window.addEventListener('keydown', function (e) {
-    if (e.code === 'KeyP')
-        { config.PAUSED = !config.PAUSED; }
-    if (e.key === ' ')
-        { splatStack.push(parseInt(Math.random() * 20) + 5); }
-});
-*/
 
 function updatePointerDownData (pointer, id, posX, posY) {
     pointer.id = id;
